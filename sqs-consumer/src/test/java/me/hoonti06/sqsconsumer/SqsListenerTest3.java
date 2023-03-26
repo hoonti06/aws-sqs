@@ -1,9 +1,12 @@
 package me.hoonti06.sqsconsumer;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.testcontainers.containers.localstack.LocalStackContainer.Service.SQS;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 import io.awspring.cloud.test.sqs.SqsTest;
+import java.time.Duration;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,7 @@ public class SqsListenerTest3 {
 
   @Container
   static LocalStackContainer localStack =
-      new LocalStackContainer("localstack/localstack")
+      new LocalStackContainer("latest")
           .withClasspathResourceMapping("/localstack", "/docker-entrypoint-initaws.d",
               BindMode.READ_ONLY)
           .withServices(SQS)
@@ -43,6 +46,9 @@ public class SqsListenerTest3 {
   @Autowired
   private QueueMessagingTemplate queueMessagingTemplate;
 
+  @Autowired
+  private SQSListener sqsListener;
+
   @Test
   void shouldStoreIncomingPurchaseOrderInDatabase() {
 
@@ -59,6 +65,10 @@ public class SqsListenerTest3 {
 //    await()
 //        .atMost(Duration.ofSeconds(3))
 //        .untilAsserted(() -> verify(purchaseOrderRepository).save(any(PurchaseOrder.class)));
+
+    await()
+        .atMost(Duration.ofSeconds(3))
+        .untilAsserted(() -> verify(sqsListener).receiveMessage(any(), any(), any()));
   }
 
 
