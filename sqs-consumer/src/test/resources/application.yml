@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: us-east-1
+    credentials:
+      access-key: test
+      secret-key: test
+    end-point:
+      uri: http://localhost:4566

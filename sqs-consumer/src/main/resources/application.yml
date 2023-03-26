@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: us-east-1
+      auto: false
+    credentials:
+      access-key: test
+      secret-key: test
+    queue:
+      name: sample.fifo
+      uri: http://localhost:4566
+
+logging:
+  level:
+    com.amazonaws.util.EC2MetadataUtils: error

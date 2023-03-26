@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+group 'me.hoonti06'
+version '1.0-SNAPSHOT'
+
+dependencies {
+//    testImplementation 'cloud.localstack:localstack-utils:0.2.22'
+}
+
+test {
+    useJUnitPlatform()
+}

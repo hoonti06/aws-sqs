@@ -1,0 +1,4 @@
+rootProject.name = 'testtest'
+include 'sqs-consumer'
+include 'sqs-producer'
+
