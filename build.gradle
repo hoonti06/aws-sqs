@@ -39,6 +39,8 @@ subprojects {
         testImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
         testImplementation "org.testcontainers:localstack:${testcontainersVersion}"
         testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+        testImplementation "org.springframework.cloud:spring-cloud-aws-messaging:${awsVersion}"
+        testImplementation "org.springframework.cloud:spring-cloud-aws-autoconfigure:${awsVersion}"
         testImplementation 'io.awspring.cloud:spring-cloud-aws-test:2.4.4'
     }
 
