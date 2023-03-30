@@ -1,22 +1,20 @@
 package me.hoonti06.sqsconsumer;
 
+import io.awspring.cloud.messaging.listener.annotation.SqsListener;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.aws.messaging.listener.Acknowledgment;
-import org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy;
-import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-@Service
+@Component
 public class SQSListener {
 
-  @SqsListener(value = "${cloud.aws.queue.name}", deletionPolicy = SqsMessageDeletionPolicy.NEVER)
-  public void receiveMessage(@Payload String payload, @Headers Map<String, String> headers, Acknowledgment acknowledgment) {
+  // Acknowledgment acknowledgment는 안 먹힘
+  @SqsListener("${cloud.aws.queue.name}")
+  public void processOrder(@Payload String payload, @Headers Map<String, String> payloadHeaders) {
     log.info("payload: {}", payload);
-    log.info("headers {}", headers);
-    acknowledgment.acknowledge();
+    log.info("headers {}", payloadHeaders);
   }
 }

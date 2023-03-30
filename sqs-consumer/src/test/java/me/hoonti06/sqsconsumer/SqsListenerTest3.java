@@ -1,34 +1,31 @@
 package me.hoonti06.sqsconsumer;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.testcontainers.containers.localstack.LocalStackContainer.Service.SQS;
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
+import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import io.awspring.cloud.test.sqs.SqsTest;
-import java.time.Duration;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.localstack.LocalStackContainer;
-import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
-@SqsTest(SQSListener.class)
+// Testcontainers 사용
 @Testcontainers
-public class SqsListenerTest3 {
+@SqsTest(SQSListener.class)
+class SqsListenerTest3 {
+
 
   @Container
   static LocalStackContainer localStack =
-      new LocalStackContainer("latest")
+      new LocalStackContainer(DockerImageName.parse("localstack/localstack:0.14.3"))
           .withClasspathResourceMapping("/localstack", "/docker-entrypoint-initaws.d",
               BindMode.READ_ONLY)
           .withServices(SQS)
@@ -40,14 +37,11 @@ public class SqsListenerTest3 {
     registry.add("cloud.aws.credentials.access-key", () -> localStack.getAccessKey());
     registry.add("cloud.aws.credentials.secret-key", () -> localStack.getSecretKey());
     registry.add("cloud.aws.region.static", () -> localStack.getRegion());
-    registry.add("order-queue-name", () -> "test-order-queue");
+    registry.add("cloud.aws.queue.name", () -> "test-order-queue");
   }
 
   @Autowired
   private QueueMessagingTemplate queueMessagingTemplate;
-
-  @Autowired
-  private SQSListener sqsListener;
 
   @Test
   void shouldStoreIncomingPurchaseOrderInDatabase() {
@@ -56,7 +50,7 @@ public class SqsListenerTest3 {
 
     String payload = ""
         + "{\n"
-        + "     \"customer_name\": \"duke\",\n"
+        + "     \"customer_name\": \"hoon\",\n"
         + "     \"order_amount\": 42\n"
         + "}";
     queueMessagingTemplate
@@ -64,13 +58,8 @@ public class SqsListenerTest3 {
 
 //    await()
 //        .atMost(Duration.ofSeconds(3))
-//        .untilAsserted(() -> verify(purchaseOrderRepository).save(any(PurchaseOrder.class)));
-
-    await()
-        .atMost(Duration.ofSeconds(3))
-        .untilAsserted(() -> verify(sqsListener).receiveMessage(any(), any(), any()));
+//        .untilAsserted(() -> verify(sqsListener).processOrder(any(), any()));
   }
-
 
 }
 

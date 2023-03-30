@@ -14,6 +14,8 @@ cloud:
     queue:
       name: sample.fifo
       uri: http://localhost:4566
+    sns:
+      enabled: false
 
 logging:
   level:

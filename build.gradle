@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version "${awsVersion}"
+    id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'com.avast.gradle.docker-compose' version '0.15.2'
 }
@@ -24,8 +24,8 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation "org.springframework.cloud:spring-cloud-aws-messaging:${awsVersion}"
-        implementation "org.springframework.cloud:spring-cloud-aws-autoconfigure:${awsVersion}"
+        implementation "io.awspring.cloud:spring-cloud-starter-aws-messaging:${springCloudAwsVersion}"
+        implementation "io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}"
 
         compileOnly 'org.projectlombok:lombok'
         testCompileOnly 'org.projectlombok:lombok'
@@ -37,12 +37,12 @@ subprojects {
         }
         testImplementation "cloud.localstack:localstack-utils:${localstackUtilsVersion}"
         testImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
+        implementation "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
         testImplementation "org.testcontainers:localstack:${testcontainersVersion}"
+        testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
         testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
-        testImplementation "org.springframework.cloud:spring-cloud-aws-messaging:${awsVersion}"
-        testImplementation "org.springframework.cloud:spring-cloud-aws-autoconfigure:${awsVersion}"
-        testImplementation 'io.awspring.cloud:spring-cloud-aws-test:2.4.4'
-        testImplementation 'net.java.dev.jna:jna:5.11.0'
+        testImplementation "io.awspring.cloud:spring-cloud-aws-test:${springCloudAwsVersion}"
+//        testImplementation 'net.java.dev.jna:jna:5.11.0'
     }
 
 }

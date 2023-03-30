@@ -14,6 +14,7 @@ import com.amazonaws.services.sqs.model.SendMessageResult;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+// localstack-utils 사용
 @ExtendWith(LocalstackDockerExtension.class)
 @LocalstackDockerProperties(services = ServiceName.SQS)
 class SqsListenerTest {
