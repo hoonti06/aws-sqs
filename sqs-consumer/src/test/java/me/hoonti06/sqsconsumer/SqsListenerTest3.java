@@ -26,8 +26,8 @@ class SqsListenerTest3 {
   @Container
   static LocalStackContainer localStack =
       new LocalStackContainer(DockerImageName.parse("localstack/localstack:0.14.3"))
-          .withClasspathResourceMapping("/localstack", "/docker-entrypoint-initaws.d",
-              BindMode.READ_ONLY)
+          .withClasspathResourceMapping("/localstack/init-aws.sh",
+              "/docker-entrypoint-initaws.d/init-aws.sh", BindMode.READ_ONLY)
           .withServices(SQS)
           .waitingFor(Wait.forLogMessage(".*Initialized\\.\n", 1));
 

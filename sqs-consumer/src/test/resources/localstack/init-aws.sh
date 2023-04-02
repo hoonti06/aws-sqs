@@ -1,0 +1,1 @@
+../../../../../localstack/init-aws.sh
