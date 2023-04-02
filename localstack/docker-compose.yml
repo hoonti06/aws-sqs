@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  localstack:
+    container_name: "localstack"
+    image: localstack/localstack:latest
+    environment:
+      - SERVICES=${SERVICES- }
+      - EDGE_PORT=4566
+      - DEBUG=${DEBUG-}
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    ports:
+      - "4566-4597:4566-4597"
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"  # ready hook

@@ -2,18 +2,7 @@
 
 localstack 컨테이너 실행
 ```bash
-$ docker-compose up -d
-```
-
-localstack 컨테이너 내부 접속
-```bash
-$ docker exec -it localstack bash
-```
-
-localstack 컨테이너 내부에서 SQS(FIFO) 생성
-```bash
-$ awslocal sqs create-queue --queue-name sample.fifo \
---attributes 'FifoQueue=true'
+$ ./localstack/run.sh
 ```
 
 `sqs-consumer` application(port : 8081) , `sqs-producer` application(port : 8082) 각각 실행
