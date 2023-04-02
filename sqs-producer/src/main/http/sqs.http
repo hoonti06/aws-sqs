@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8082/sendMessage
+POST {{provider}}/sendMessage
 Content-Type: application/json
 
 {
