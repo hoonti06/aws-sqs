@@ -7,4 +7,4 @@ $ ./localstack/run.sh
 
 `sqs-consumer` application(port : 8081) , `sqs-producer` application(port : 8082) 각각 실행
 
-`sqs-producer`의 **src.http.sqs.http**로 로컬 테스트 수행
+`sqs-producer`의 **src/http/sqs.http**로 로컬 테스트 수행
